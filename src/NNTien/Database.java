@@ -9,22 +9,20 @@ import java.util.*;
  * Description: ...
  */
 public class Database {
-    private HashMap<String,String> data = new HashMap<>();
-
+    private HashMap<String,String> data = new HashMap<String,String>();
 
     public Database(){
         try{
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream("slang.txt")));
+            BufferedReader br = new BufferedReader(new FileReader("slang.txt"));
             String line;
+            int i=0;
             while ((line=br.readLine())!=null){
+                System.out.println(i++);
                 int index = line.lastIndexOf("`");
                 String[] temp={line.substring(0,index),line.substring(index+1)};
                 data.put(temp[0],temp[1]);
             }
         }catch (Exception ex){
-            data=null;
         }
     }
     public List<String> title(){
