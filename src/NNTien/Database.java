@@ -9,15 +9,13 @@ import java.util.*;
  * Description: ...
  */
 public class Database {
-    private HashMap<String,String> data = new HashMap<String,String>();
+    private HashMap<String,String> data = new HashMap<>();
 
     public Database(){
         try{
             BufferedReader br = new BufferedReader(new FileReader("slang.txt"));
             String line;
-            int i=0;
             while ((line=br.readLine())!=null){
-                System.out.println(i++);
                 int index = line.lastIndexOf("`");
                 String[] temp={line.substring(0,index),line.substring(index+1)};
                 data.put(temp[0],temp[1]);
@@ -26,7 +24,9 @@ public class Database {
         }
     }
     public List<String> title(){
-        return new ArrayList<>(data.keySet());
+        List<String> l= new ArrayList<>(data.keySet());
+        Collections.sort(l);
+        return l;
     }
 
     public List<String> meaning(){
