@@ -15,7 +15,7 @@ public class menu extends JMenuBar {
     private static JMenu quizzMenu;
     private  JMenuItem slang;
     private  JMenuItem definition;
-    private  JMenuItem add;
+    private  JMenuItem addPage;
     private  JMenuItem edit;
     private  JMenuItem delete;
     private  JMenuItem today;
@@ -29,13 +29,56 @@ public class menu extends JMenuBar {
         historyMenu= new JMenu("History");
         slangMenu  = new JMenu("Slang");
         quizzMenu  = new JMenu("Quizz");
+
         slang = new JMenuItem("Slang");
+        slang.setActionCommand("toSlang");
+        slang.addActionListener(con);
+
         definition = new JMenuItem("Definition");
+        definition.setActionCommand("toDefinition");
+        definition.addActionListener(con);
+
+        addPage = new JMenuItem("Add");
+        addPage.setActionCommand("toAdd");
+        addPage.addActionListener(con);
+
+        edit = new JMenuItem("Edit");
+        edit.setActionCommand("toEdit");
+        edit.addActionListener(con);
+
+        delete=new JMenuItem("Delete");
+        delete.setActionCommand("toDelete");
+        delete.addActionListener(con);
+
+        today = new JMenuItem("Today slang");
+        today.setActionCommand("today");
+        today.addActionListener(con);
+
+        bySlang = new JMenuItem("Slang Quizz");
+        bySlang.setActionCommand("slangQuizz");
+        bySlang.addActionListener(con);
+
+        byDefinition = new JMenuItem("Definition Quizz");
+        byDefinition.setActionCommand("definitionQuizz");
+        byDefinition.addActionListener(con);
+
+
         typeMenu.add(slang);
         typeMenu.add(definition);
+
+        historyMenu.addActionListener(con);
+
+        slangMenu.add(addPage);
+        slangMenu.add(edit);
+        slangMenu.add(delete);
+        slangMenu.add(today);
+
+        quizzMenu.add(bySlang);
+        quizzMenu.add(byDefinition);
+
         add(typeMenu);
-        add(historyMenu);
         add(slangMenu);
+        add(historyMenu);
         add(quizzMenu);
     }
 

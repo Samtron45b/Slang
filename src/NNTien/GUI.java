@@ -17,9 +17,10 @@ import NNTien.*;
  */
 public class GUI extends JPanel{
     private static JFrame frame=null;
+    private static JPanel card;
 
     public GUI(){
-
+        add(new content());
     }
 
 
