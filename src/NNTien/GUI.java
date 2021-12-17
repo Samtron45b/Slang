@@ -18,8 +18,10 @@ import NNTien.*;
 public class GUI extends JPanel{
     private static JFrame frame=null;
     private static JPanel card;
+    private static control con;
 
     public GUI(){
+
         add(new content());
     }
 
@@ -33,7 +35,7 @@ public class GUI extends JPanel{
         layout.setOpaque(true);
         frame.setContentPane(layout);
         frame.pack();
-        frame.setJMenuBar(new menu());
+        frame.setJMenuBar(new menu(con));
         frame.setVisible(true);
     }
 
@@ -41,6 +43,7 @@ public class GUI extends JPanel{
 
     public static void main(String[] args) {
         Database data = new Database();
+        con = new control();
         javax.swing.SwingUtilities.invokeLater(GUI::createGUI);
     }
 }

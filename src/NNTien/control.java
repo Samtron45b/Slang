@@ -24,7 +24,7 @@ public class control implements ActionListener, MenuListener {
     @Override
     public void menuSelected(MenuEvent e) {
         CardLayout cl = (CardLayout)(content.card.getLayout());
-        cl.show(content.card,"History");
+        cl.show(content.card,"history");
     }
 
     @Override

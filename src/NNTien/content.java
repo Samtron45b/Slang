@@ -1,6 +1,9 @@
 package NNTien;
 
 import javax.swing.*;
+import NNTien.History;
+
+import java.awt.*;
 
 /**
  * NNTien
@@ -12,6 +15,8 @@ public class content extends JPanel{
     public static JPanel card;
 
     public content(){
-
+        card = new JPanel(new CardLayout());
+        History history = new History();
+        card.add(history,"history");
     }
 }

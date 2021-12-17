@@ -2,6 +2,9 @@ package NNTien;
 
 import javax.swing.*;
 import NNTien.control;
+
+import java.awt.event.ActionListener;
+
 /**
  * NNTien
  * Created by user
@@ -23,8 +26,7 @@ public class menu extends JMenuBar {
     private  JMenuItem byDefinition;
 
 
-    public menu(){
-        control con=new control();
+    public menu(ActionListener con){
         typeMenu= new JMenu("Type");
         historyMenu= new JMenu("History");
         slangMenu  = new JMenu("Slang");
