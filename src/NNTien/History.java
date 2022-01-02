@@ -38,18 +38,27 @@ public class History extends JPanel {
 
             setLayout(new FlowLayout());
 
-            slangPane = new JPanel();
+            slangPane = new JPanel(new BorderLayout());
+            slangPane.add(new JLabel("Slang"),BorderLayout.PAGE_START);
             slangList = new JList(slang.toArray());
-            slangPane.add(slangList);
+            JScrollPane scrollSlang = new JScrollPane();
+            scrollSlang.setViewportView(slangList);
+            slangList.setPreferredSize(new Dimension(200, 400));
+            slangPane.add(scrollSlang,BorderLayout.CENTER);
 
-            meaningPane = new JPanel();
+            meaningPane = new JPanel(new BorderLayout());
+            meaningPane.add(new JLabel("Meaning"),BorderLayout.PAGE_START);
             meaningList = new JList(meaning.toArray());
-            meaningPane.add(meaningList);
+            JScrollPane scrollMeaning = new JScrollPane();
+            scrollMeaning.setViewportView(meaningList);
+            meaningList.setPreferredSize(new Dimension(200, 400));
+            meaningPane.add(scrollMeaning,BorderLayout.CENTER);
 
             add(slangPane);
             add(meaningPane);
 
         }catch (Exception ex){
+            System.out.println("no");
         }
     }
 

@@ -1,7 +1,7 @@
 package NNTien;
 
 import javax.swing.*;
-import NNTien.control;
+import javax.swing.event.MenuListener;
 
 import java.awt.event.ActionListener;
 
@@ -26,7 +26,7 @@ public class menu extends JMenuBar {
     private  JMenuItem byDefinition;
 
 
-    public menu(ActionListener con){
+    public menu(ActionListener conA, MenuListener conM){
         typeMenu= new JMenu("Type");
         historyMenu= new JMenu("History");
         slangMenu  = new JMenu("Slang");
@@ -34,41 +34,41 @@ public class menu extends JMenuBar {
 
         slang = new JMenuItem("Slang");
         slang.setActionCommand("toSlang");
-        slang.addActionListener(con);
+        slang.addActionListener(conA);
 
         definition = new JMenuItem("Definition");
         definition.setActionCommand("toDefinition");
-        definition.addActionListener(con);
+        definition.addActionListener(conA);
 
         addPage = new JMenuItem("Add");
         addPage.setActionCommand("toAdd");
-        addPage.addActionListener(con);
+        addPage.addActionListener(conA);
 
         edit = new JMenuItem("Edit");
         edit.setActionCommand("toEdit");
-        edit.addActionListener(con);
+        edit.addActionListener(conA);
 
         delete=new JMenuItem("Delete");
         delete.setActionCommand("toDelete");
-        delete.addActionListener(con);
+        delete.addActionListener(conA);
 
         today = new JMenuItem("Today slang");
         today.setActionCommand("today");
-        today.addActionListener(con);
+        today.addActionListener(conA);
 
         bySlang = new JMenuItem("Slang Quizz");
         bySlang.setActionCommand("slangQuizz");
-        bySlang.addActionListener(con);
+        bySlang.addActionListener(conA);
 
         byDefinition = new JMenuItem("Definition Quizz");
         byDefinition.setActionCommand("definitionQuizz");
-        byDefinition.addActionListener(con);
+        byDefinition.addActionListener(conA);
 
 
         typeMenu.add(slang);
         typeMenu.add(definition);
 
-        historyMenu.addActionListener(con);
+        historyMenu.addMenuListener(conM);
 
         slangMenu.add(addPage);
         slangMenu.add(edit);

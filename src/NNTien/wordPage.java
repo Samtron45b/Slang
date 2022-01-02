@@ -1,7 +1,6 @@
 package NNTien;
 
 import javax.swing.*;
-import NNTien.*;
 
 import java.awt.*;
 import java.awt.event.*;
