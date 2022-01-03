@@ -13,11 +13,12 @@ import java.util.List;
  * Description: ...
  */
 public class History extends JPanel {
-    private List<String> slang;
-    private List<String> meaning;
+
     private JList slangList;
-    private JList meaningList;
+    private DefaultListModel<String> slangModel;
     private JPanel slangPane;
+    private JList meaningList;
+    private DefaultListModel<String> meaningModel;
     private JPanel meaningPane;
 
     public History(){
@@ -25,22 +26,24 @@ public class History extends JPanel {
             BufferedReader slang_br = new BufferedReader(new FileReader("history/slang.txt"));
             BufferedReader meaning_br = new BufferedReader(new FileReader("history/meaning.txt"));
             String line;
+            slangModel = new DefaultListModel<>();
+            meaningModel = new DefaultListModel<>();
 
-            slang=new ArrayList<>();
-            meaning=new ArrayList<>();
             while ((line=slang_br.readLine())!=null){
-                slang.add(0,line);
+                slangModel.add(0,line);
             }
 
             while ((line=meaning_br.readLine())!=null){
-                meaning.add(0,line);
+                meaningModel.add(0,line);
             }
 
             setLayout(new FlowLayout());
 
             slangPane = new JPanel(new BorderLayout());
             slangPane.add(new JLabel("Slang"),BorderLayout.PAGE_START);
-            slangList = new JList(slang.toArray());
+            if(slangModel.size()>22)
+                slangModel.removeRange(22,slangModel.size()-1);
+            slangList = new JList(slangModel);
             JScrollPane scrollSlang = new JScrollPane();
             scrollSlang.setViewportView(slangList);
             slangList.setPreferredSize(new Dimension(200, 400));
@@ -48,7 +51,9 @@ public class History extends JPanel {
 
             meaningPane = new JPanel(new BorderLayout());
             meaningPane.add(new JLabel("Meaning"),BorderLayout.PAGE_START);
-            meaningList = new JList(meaning.toArray());
+            if(meaningModel.size()>22)
+                meaningModel.removeRange(22,meaningModel.size()-1);
+            meaningList = new JList(meaningModel);
             JScrollPane scrollMeaning = new JScrollPane();
             scrollMeaning.setViewportView(meaningList);
             meaningList.setPreferredSize(new Dimension(200, 400));
@@ -64,7 +69,9 @@ public class History extends JPanel {
 
     public void updateSlang(String str){
 
-        slang.add(0,str);
+        if(slangModel.size()>22)
+            slangModel.removeRange(22,slangModel.size()-1);
+        slangModel.add(0,str);
 
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter("history/slang.txt",true));
@@ -77,7 +84,10 @@ public class History extends JPanel {
 
     public void updateMeaning(String str){
 
-        meaning.add(0,str);
+        if(meaningModel.size()>22)
+            meaningModel.removeRange(22,meaningModel.size()-1);
+
+        meaningModel.add(0,str);
 
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter("history/meaning.txt",true));

@@ -52,7 +52,7 @@ public class wordPage extends JPanel implements ActionListener {
                     int index = thisList.locationToIndex(e.getPoint());
                     if(index>=0){
                         Object o =thisList.getModel().getElementAt(index);
-//                        System.out.println(data.title().);
+                        System.out.println(data.title().get(index));
                     }
                 }
             }

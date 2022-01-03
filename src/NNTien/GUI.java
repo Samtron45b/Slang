@@ -52,6 +52,10 @@ public class GUI extends JPanel {
         }
     }
 
+    static class slangPage extends JPanel{
+
+    }
+
     public GUI(){
         setLayout(new BorderLayout());
         card = new JPanel(new CardLayout());
