@@ -36,19 +36,31 @@ public class Database {
     }
 
     public List<String> meaning(){
-        return new ArrayList<>(data.values());
+        List<String> l= new ArrayList<>(data.values());
+        Collections.sort(l);
+        return l;
     }
 
     public String findTitle(String title){
         String result=null;
 
         for(Map.Entry<String,String> entry: data.entrySet()){
-            if(Objects.equals(entry.getValue(),title)){
+            if(entry.getValue().contains(title)){
                 result=entry.getKey();
                 break;
             }
         }
 
         return result;
+    }
+
+    public boolean addNew(String title, String meaning){
+        data.put(title,meaning);
+        return true;
+    }
+
+    public boolean delete(String title){
+        data.remove(title);
+        return true;
     }
 }
