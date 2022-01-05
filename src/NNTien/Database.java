@@ -55,8 +55,12 @@ public class Database {
     }
 
     public boolean addNew(String title, String meaning){
-        data.put(title,meaning);
-        return true;
+        if(findMeaning(title)==null)
+        {
+            data.put(title,meaning);
+            return true;
+        }
+        return false;
     }
 
     public boolean delete(String title){

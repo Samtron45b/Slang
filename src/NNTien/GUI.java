@@ -11,6 +11,7 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import java.util.*;
 import java.util.List;
+import java.time.LocalDate;
 
 /**
  * NNTien
@@ -29,8 +30,10 @@ public class GUI extends JPanel {
     private static History history;
     private static slangPage slangDict;
     private static meaningPage meaningDict;
-    private DefaultListModel<String> slangModel;
-    private DefaultListModel<String> meaningModel;
+    private static addPage addSlang;
+    private static editPage editSlang;
+    private static DefaultListModel<String> slangModel;
+    private static DefaultListModel<String> meaningModel;
 
 
     static class controlAction implements ActionListener {
@@ -46,6 +49,19 @@ public class GUI extends JPanel {
             }else if(strCmd.equals("toDefinition")){
                 CardLayout cl = (CardLayout)(card.getLayout());
                 cl.show(card,"meaning");
+            }else if(strCmd.equals("toAdd")){
+                CardLayout cl = (CardLayout)(card.getLayout());
+                cl.show(card,"add");
+            }else if(strCmd.equals("toEdit")){
+                CardLayout cl = (CardLayout)(card.getLayout());
+                cl.show(card,"edit");
+            }
+            else if(strCmd.equals("refresh")){
+                data=rawData;
+                slangModel.clear();
+                slangModel.addAll(data.title());
+                meaningModel.clear();
+                meaningModel.addAll(data.meaning());
             }
         }
     }
@@ -55,6 +71,8 @@ public class GUI extends JPanel {
         public void menuSelected(MenuEvent e) {
             CardLayout cl = (CardLayout)(card.getLayout());
             cl.show(card,"history");
+            slangDict.clear();
+            meaningDict.clear();
         }
 
         @Override
@@ -218,15 +236,120 @@ public class GUI extends JPanel {
         }
     }
 
+    class addPage extends  JPanel{
+        private JTextField slang;
+        private JTextField meaning;
+        public addPage(){
+            setLayout(new BorderLayout());
+            JPanel head = new JPanel(new FlowLayout(1));
+
+            JPanel slangPanel = new JPanel(new BorderLayout());
+            slang = new JTextField(20);
+            slangPanel.add(new JLabel("Slang"),BorderLayout.PAGE_START);
+            slangPanel.add(slang,BorderLayout.CENTER);
+
+            JPanel meaningPanel = new JPanel(new BorderLayout());
+            meaning = new JTextField(40);
+            meaningPanel.add(new JLabel("Meaning"), BorderLayout.PAGE_START);
+            meaningPanel.add(meaning,BorderLayout.CENTER);
+
+            head.add(slangPanel);
+            head.add(meaningPanel);
+
+            JPanel btnPanel = new JPanel(new FlowLayout(1));
+            JButton btn = new JButton("Add");
+            btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(!slang.getText().isEmpty()&&!meaning.getText().isEmpty())
+                    {
+                        boolean available = data.addNew(slang.getText(),meaning.getText());
+                        if(available) {
+                            JOptionPane.showMessageDialog(frame,
+                                    "Done");
+                            slangModel.clear();
+                            slangModel.addAll(data.title());
+                            meaningModel.clear();
+                            meaningModel.addAll(data.meaning());
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(frame,
+                                    "Slang exist: '"+slang.getText()+":"+data.findMeaning(slang.getText())+"'",
+                                    "Warning",
+                                    JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(frame,
+                                "Empty field!",
+                                "Failed",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+            btnPanel.add(btn);
+
+            add(head,BorderLayout.PAGE_START);
+            add(btnPanel,BorderLayout.CENTER);
+        }
+
+        public void clear(){
+            slang.setText("");
+            meaning.setText("");
+        }
+    }
+
+    class editPage extends JPanel{
+        private JList slangList;
+        private JPanel slang;
+        private JPanel edit;
+        private JTextArea slangText;
+        private JTextArea meaningText;
+
+        public editPage(){
+            setLayout(new FlowLayout());
+            slangModel = new DefaultListModel<>();
+            slangModel.addAll(data.title());
+            slangList = new JList(slangModel);
+            slangList.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JList thisList = (JList) e.getSource();
+                    if(e.getClickCount()>=1){
+                        int index = thisList.locationToIndex(e.getPoint());
+                        if(index>=0){
+                            String value = data.title().get(index);
+                            slangText.setText(value);
+                            meaningText.setText(data.findMeaning(value));
+                        }
+                    }
+                }
+            });
+            JScrollPane titleList = new JScrollPane();
+            titleList.setViewportView(slangList);
+            slang = new JPanel(new BorderLayout());
+            slang.add(new JLabel("Slang"),BorderLayout.PAGE_START);
+            slang.add(titleList,BorderLayout.CENTER);
+
+            add(slang);
+
+        }
+    }
+
     public GUI(){
         setLayout(new BorderLayout());
         card = new JPanel(new CardLayout());
         history = new History();
         slangDict = new slangPage();
         meaningDict = new meaningPage();
+        addSlang = new addPage();
+        editSlang= new editPage();
+
         card.add(slangDict,"slang");
         card.add(meaningDict,"meaning");
         card.add(history,"history");
+        card.add(addSlang,"add");
+        card.add(editSlang,"edit");
 
         add(card);
     }
@@ -250,6 +373,7 @@ public class GUI extends JPanel {
 
     public static void main(String[] args) {
         data = new Database();
+        rawData=data;
         conA = new controlAction();
         conM = new controlMenu();
         javax.swing.SwingUtilities.invokeLater(GUI::createGUI);

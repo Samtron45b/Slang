@@ -82,6 +82,10 @@ public class menu extends JMenuBar {
         add(slangMenu);
         add(historyMenu);
         add(quizzMenu);
+        JButton btn = new JButton("Refresh");
+        btn.setActionCommand("refresh");
+        btn.addActionListener(conA);
+        add(btn);
     }
 
 }
