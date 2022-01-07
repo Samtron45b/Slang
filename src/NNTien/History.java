@@ -2,9 +2,7 @@ package NNTien;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.io.*;
-import java.util.List;
 
 /**
  * NNTien

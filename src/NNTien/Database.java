@@ -2,7 +2,6 @@ package NNTien;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * NNTien
@@ -26,6 +25,11 @@ public class Database {
         }catch (Exception ex){
         }
     }
+
+    public Database(Database database) {
+        this.data= (HashMap<String, String>) database.data.clone();
+    }
+
     public List<String> title(){
         List<String> l= new ArrayList<>(data.keySet());
         Collections.sort(l);
@@ -63,8 +67,18 @@ public class Database {
         return false;
     }
 
+    public boolean editSlang(String title, String meaning){
+        try{
+            data.put(title,meaning);
+            return true;
+        }catch (Exception ex){
+            return false;
+        }
+    }
     public boolean delete(String title){
         data.remove(title);
         return true;
     }
+
+
 }
