@@ -16,6 +16,7 @@ public class Database {
         try{
             BufferedReader br = new BufferedReader(new FileReader("slang.txt"));
             String line;
+            line= br.readLine();
             while ((line=br.readLine())!=null){
                 int index = line.lastIndexOf("`");
                 String[] temp={line.substring(0,index),line.substring(index+1)};
@@ -78,6 +79,21 @@ public class Database {
     public boolean delete(String title){
         data.remove(title);
         return true;
+    }
+
+    public void save(){
+        try{
+            BufferedWriter br = new BufferedWriter(new FileWriter("slang.txt"));
+            br.write("Slang`Meaning");
+            br.newLine();
+            for(Map.Entry<String, String> entry : data.entrySet()) {
+                br.write(entry.getKey()+"`"+entry.getValue());
+                br.newLine();
+            }
+            br.flush();
+            br.close();
+        }catch (Exception ex){
+        }
     }
 
 
